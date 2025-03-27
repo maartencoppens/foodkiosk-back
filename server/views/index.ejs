@@ -1,0 +1,149 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <aside class="col-md-3 col-lg-2 px-0 sidebar">
+      <header class="p-3">
+        <h1 class="h4 text-white">FoodKiosk</h1>
+      </header>
+      <nav aria-label="Main navigation">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/" aria-current="page">
+              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/products">
+              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add-product">
+              <i class="bi bi-plus-circle me-2" aria-hidden="true"></i> Add Product
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="col-md-9 col-lg-10 main-content">
+      <!-- Top Navigation -->
+      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+          <h2 class="navbar-brand">Dashboard</h2>
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <button class="btn btn-link text-dark" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell" aria-hidden="true"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  3
+                </span>
+              </button>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-link text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <section class="row g-4">
+        <!-- Stats Cards -->
+        <article class="col-md-3">
+          <div class="card bg-primary text-white">
+            <div class="card-body">
+              <h3 class="card-title h5">Total Kiosks</h3>
+              <p class="card-text h2">12</p>
+              <p class="card-text"><small>Active: 10</small></p>
+              <p class="card-text small">Total number of food kiosks in operation</p>
+            </div>
+          </div>
+        </article>
+        <article class="col-md-3">
+          <div class="card bg-success text-white">
+            <div class="card-body">
+              <h3 class="card-title h5">Today's Orders</h3>
+              <p class="card-text h2">156</p>
+              <p class="card-text"><small>+12% from yesterday</small></p>
+              <p class="card-text small">Total orders processed today</p>
+            </div>
+          </div>
+        </article>
+        <article class="col-md-3">
+          <div class="card bg-warning text-white">
+            <div class="card-body">
+              <h3 class="card-title h5">Revenue</h3>
+              <p class="card-text h2">€2,450</p>
+              <p class="card-text"><small>+8% from yesterday</small></p>
+              <p class="card-text small">Total revenue generated today</p>
+            </div>
+          </div>
+        </article>
+        <article class="col-md-3">
+          <div class="card bg-info text-white">
+            <div class="card-body">
+              <h3 class="card-title h5">Active Users</h3>
+              <p class="card-text h2">89</p>
+              <p class="card-text"><small>Currently online</small></p>
+              <p class="card-text small">Number of users currently browsing</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Recent Orders Table -->
+        <section class="col-12">
+          <div class="card">
+            <header class="card-header">
+              <h3 class="card-title h5 mb-0">Recent Orders</h3>
+            </header>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">Kiosk</th>
+                      <th scope="col">Customer</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#12345</td>
+                      <td>Subway Station 1</td>
+                      <td>John Doe</td>
+                      <td>€12.50</td>
+                      <td><span class="badge bg-success">Completed</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary">View</button>
+                        <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#12344</td>
+                      <td>Subway Station 2</td>
+                      <td>Jane Smith</td>
+                      <td>€8.75</td>
+                      <td><span class="badge bg-warning">Processing</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary">View</button>
+                        <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+</div>
+

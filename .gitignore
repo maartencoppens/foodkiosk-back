@@ -134,3 +134,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# These entries are already covered above:
+# - dist/ is covered by "# Nuxt.js build / generate output" section
+# - .vscode/ is covered by "# Stores VSCode versions used for testing VSCode extensions"
+# - node_modules/ is typically included by default in .gitignore
+
+# Adding only unique entries not found above
+package-lock.json
+.env
+.DS_Store

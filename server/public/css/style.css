@@ -1,0 +1,193 @@
+:root {
+  --subway-green: #009C3B;
+  --subway-yellow: #FFC72C;
+  --subway-dark: #1A1A1A;
+  --subway-light: #F5F5F5;
+}
+
+body {
+  background-color: var(--subway-light);
+}
+
+.sidebar {
+  min-height: 100vh;
+  background-color: var(--subway-green);
+  color: white;
+  border-right: 4px solid var(--subway-yellow);
+}
+
+.nav-link {
+  color: rgba(255,255,255,.9);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--subway-yellow);
+  background-color: rgba(255,255,255,.1);
+}
+
+.nav-link.active {
+  color: var(--subway-yellow);
+  background-color: rgba(255,255,255,.1);
+  border-left: 4px solid var(--subway-yellow);
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.card {
+  transition: transform 0.2s;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  color: var(--subway-green) !important;
+  font-weight: bold;
+}
+
+.btn-link {
+  color: var(--subway-green) !important;
+}
+
+.btn-link:hover {
+  color: var(--subway-yellow) !important;
+}
+
+.card.bg-primary {
+  background-color: var(--subway-green) !important;
+  color: white;
+}
+
+.card.bg-success {
+  background-color: var(--subway-green) !important;
+  color: white;
+}
+
+.card.bg-warning {
+  background-color: var(--subway-yellow) !important;
+  color: var(--subway-dark);
+}
+
+.card.bg-info {
+  background-color: var(--subway-green) !important;
+  color: white;
+}
+
+.card .card-title {
+  color: inherit;
+  margin-bottom: 0.5rem;
+}
+
+.card .card-text {
+  color: inherit;
+  opacity: 0.9;
+}
+
+.table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: var(--subway-green);
+  color: white;
+  border: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0,156,59,0.05);
+}
+
+.badge.bg-success {
+  background-color: var(--subway-green) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--subway-yellow) !important;
+  color: var(--subway-dark) !important;
+}
+
+.btn-outline-primary {
+  color: var(--subway-green);
+  border-color: var(--subway-green);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--subway-green);
+  border-color: var(--subway-green);
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 2px solid var(--subway-yellow);
+}
+
+.card-title {
+  color: var(--subway-green);
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.product-actions .btn {
+  margin-right: 0.5rem;
+}
+
+.product-actions .btn:last-child {
+  margin-right: 0;
+}
+
+.form-label {
+  color: var(--subway-dark);
+  font-weight: 500;
+}
+
+.form-control:focus {
+  border-color: var(--subway-green);
+  box-shadow: 0 0 0 0.25rem rgba(0,156,59,0.25);
+}
+
+.btn-primary {
+  background-color: var(--subway-green);
+  border-color: var(--subway-green);
+}
+
+.btn-primary:hover {
+  background-color: #008033;
+  border-color: #008033;
+}
+
+.preview-image {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
+} 

@@ -1,0 +1,163 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <aside class="col-md-3 col-lg-2 px-0 sidebar">
+      <header class="p-3">
+        <h1 class="h4 text-white">FoodKiosk</h1>
+      </header>
+      <nav aria-label="Main navigation">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/products" aria-current="page">
+              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add-product">
+              <i class="bi bi-plus-circle me-2" aria-hidden="true"></i> Add Product
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="col-md-9 col-lg-10 main-content">
+      <!-- Top Navigation -->
+      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+          <h2 class="navbar-brand">Products</h2>
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <button class="btn btn-link text-dark" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell" aria-hidden="true"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  3
+                </span>
+              </button>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-link text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Products Table -->
+      <div class="card">
+        <header class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="card-title h5 mb-0">All Products</h3>
+            <div class="d-flex gap-2">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search products..." aria-label="Search products">
+                <button class="btn btn-outline-secondary" type="button">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+              <button class="btn btn-outline-secondary">
+                <i class="bi bi-funnel"></i> Filter
+              </button>
+            </div>
+          </div>
+        </header>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="/images/products/sandwich1.jpg" alt="Italian B.M.T." class="product-image">
+                  </td>
+                  <td>Italian B.M.T.</td>
+                  <td>Classic Sandwiches</td>
+                  <td>€6.99</td>
+                  <td>45</td>
+                  <td><span class="badge bg-success">In Stock</span></td>
+                  <td class="product-actions">
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/products/sandwich2.jpg" alt="Veggie Delite" class="product-image">
+                  </td>
+                  <td>Veggie Delite</td>
+                  <td>Fresh Fit™</td>
+                  <td>€5.99</td>
+                  <td>32</td>
+                  <td><span class="badge bg-success">In Stock</span></td>
+                  <td class="product-actions">
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/products/sandwich3.jpg" alt="Spicy Italian" class="product-image">
+                  </td>
+                  <td>Spicy Italian</td>
+                  <td>Signature Wraps</td>
+                  <td>€7.99</td>
+                  <td>15</td>
+                  <td><span class="badge bg-warning">Low Stock</span></td>
+                  <td class="product-actions">
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Product pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
