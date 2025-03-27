@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/app.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/css/(.*)",
+      "dest": "/server/public/css/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/server/public/images/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server/app.ts"
+    }
+  ]
+} 

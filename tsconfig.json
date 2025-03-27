@@ -5,6 +5,10 @@
       "outDir": "./dist",
       "rootDir": "./server",
       "strict": true,
-      "esModuleInterop": true
-    }
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": ["server/**/*"],
+    "exclude": ["node_modules"]
   }
