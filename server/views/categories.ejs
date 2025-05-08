@@ -14,12 +14,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/products" aria-current="page">
+            <a class="nav-link" href="/products">
               <i class="bi bi-box me-2" aria-hidden="true"></i> Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/categories">
+            <a class="nav-link active" href="/categories" aria-current="page">
               <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
             </a>
           </li>
@@ -38,7 +38,7 @@
       <!-- Top Navigation -->
       <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container-fluid">
-          <h2 class="navbar-brand">Products</h2>
+          <h2 class="navbar-brand">Categories</h2>
           <div class="d-flex align-items-center">
             <div class="dropdown me-3">
               <button
@@ -71,19 +71,18 @@
         </div>
       </header>
 
-      <!-- Products Table -->
+      <!-- Categories Table -->
       <div class="card">
         <header class="card-header">
           <div class="d-flex justify-content-between align-items-center">
-            <h3 class="card-title h5 mb-0">All Products</h3>
+            <h3 class="card-title h5 mb-0">All Categories</h3>
             <div class="d-flex gap-2">
               <div class="input-group">
                 <input
                   type="text"
-                  name="search"
                   class="form-control"
-                  placeholder="Search products..."
-                  aria-label="Search products"
+                  placeholder="Search categories..."
+                  aria-label="Search categories"
                 />
                 <button class="btn btn-outline-secondary" type="button">
                   <i class="bi bi-search"></i>
@@ -100,34 +99,21 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Image</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Stock</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <% data.forEach(product => { %>
+                <% data.forEach(category => { %>
                   <tr>
+                    <td><%= category.name %></td>
                     <td>
-                      <img
-                        src="<%= product.image %>"
-                        alt="<%= product.name %>"
-                        class="product-image"
-                      />
-                      
+                      <span class="badge <%= category.status ? 'bg-success' : 'bg-danger' %>">
+                        <%= category.status ? 'Active' : 'Inactive' %>
+                      </span>
                     </td>
-                    <td><%= product.name %></td>
-                    <td><%= product.category %></td>
-                    <td>€<%= product.price %></td>
-                    <td><%= product.stock %></td>
-                    <td><span class="badge <%= product.stock === 0 ? 'bg-danger' : (product.stock < 20 ? 'bg-warning' : 'bg-success') %>">
-                      <%= product.stock === 0 ? 'Out of Stock' : (product.stock < 20 ? 'Low Stock' : 'In Stock') %>
-                    </span></td>
-                    <td class="product-actions">
+                    <td class="category-actions">
                       <button class="btn btn-sm btn-outline-primary">
                         <i class="bi bi-pencil"></i>
                       </button>
@@ -137,18 +123,15 @@
                     </td>
                   </tr>
                 <% }); %>
-                </tr>
               </tbody>
             </table>
           </div>
 
           <!-- Pagination -->
-          <nav aria-label="Product pagination" class="mt-4">
+          <nav aria-label="Category pagination" class="mt-4">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
-                  >Previous</a
-                >
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
               </li>
               <li class="page-item active">
                 <a class="page-link" href="#">1</a>
@@ -164,4 +147,4 @@
       </div>
     </main>
   </div>
-</div>
+</div> 

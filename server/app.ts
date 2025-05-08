@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import path from "path";
 import expressLayouts from "express-ejs-layouts";
 import routes from "./routes";
+import apiRoutes from "./api";
 
 const app: Application = express();
 const PORT: number = 3000;
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes gebruiken
 app.use("/", routes);
+app.use("/api", apiRoutes);
 
 // Server starten
 app.listen(PORT, (): void => {
