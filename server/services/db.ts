@@ -1,6 +1,12 @@
-import postgres, { Sql } from 'postgres';
+import 'dotenv/config';
+import postgres, { Sql } from "postgres";
 
-const SB_POSTGRES_URL:string = process.env.POSTGRES_URL || 'postgresql://postgres:postgres@127.0.0.1:64324/postgres';
-const sql: Sql = postgres(SB_POSTGRES_URL);
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is not set");
+}
+
+const sql = postgres(process.env.DATABASE_URL, {
+  ssl: "require", // nodig voor Supabase
+});
 
 export default sql;
