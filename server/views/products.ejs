@@ -84,6 +84,7 @@
                   class="form-control"
                   placeholder="Search products..."
                   aria-label="Search products"
+
                 />
                 <button class="btn btn-outline-secondary" type="button">
                   <i class="bi bi-search"></i>
@@ -115,13 +116,13 @@
                     <td>
                       <img
                         src="<%= product.image %>"
-                        alt="<%= product.name %>"
+                        alt="<%= product.product_name %>"
                         class="product-image"
                       />
                       
                     </td>
-                    <td><%= product.name %></td>
-                    <td><%= product.category %></td>
+                    <td><%= product.product_name %></td>
+                    <td><%= product.category_name %></td>
                     <td>€<%= product.price %></td>
                     <td><%= product.stock %></td>
                     <td><span class="badge <%= product.stock === 0 ? 'bg-danger' : (product.stock < 20 ? 'bg-warning' : 'bg-success') %>">

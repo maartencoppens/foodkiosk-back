@@ -28,11 +28,21 @@ export async function getAllCategories(): Promise<Category[]> {
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
-    const data: Product[] = await sql`
-      SELECT p.id, p.name, p.image, p.category_id, p.price, c.name, p.stock 
-      FROM products p
-      JOIN categories c ON p.category_id = c.id
+    const data: Product[] = await sql`SELECT 
+      p.id, 
+      p.name AS product_name, 
+      p.image, 
+      p.price, 
+      p.stock, 
+      c.name AS category_name
+  FROM 
+      products p
+  JOIN 
+      categories c ON p.category_id = c.id;
+  
     `;
+    console.log(data);
+
     return data;
   } catch (error) {
     console.error("Error fetching news:", error);
@@ -42,12 +52,11 @@ export async function getAllProducts(): Promise<Product[]> {
 
 export async function filterProducts(search: string): Promise<Product[]> {
   try {
-    const data: Product[] = await sql`select * from products where name like ${search}`;
+    const data: Product[] =
+      await sql`select * from products where name like ${search}`;
     return data;
   } catch (error) {
     console.error("Error fetching news:", error);
     throw new Error("Could not fetch news: " + error);
   }
 }
-
-
