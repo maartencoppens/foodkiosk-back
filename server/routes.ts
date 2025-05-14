@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from "express";
 import {
+  addProduct,
   Category,
   filterProducts,
   getAllCategories,
@@ -33,8 +34,21 @@ router.get("/products", async (req: Request, res: Response): Promise<void> => {
   res.render("products", { title: "Products", search });
 });
 
-router.get("/add-product", (req: Request, res: Response): void => {
-  res.render("add-product", { title: "Add Product" });
+router.get("/add-product", async (req: Request, res: Response) => {
+  const categories = await getAllCategories();
+  res.render("add-product", { title: "Add Product", categories });
+});
+
+router.post("/add-product-form", (req: Request, res: Response) => {
+  //     image: req.body.image?.trim() || "",
+
+  const newProduct = {
+    name: req.body.name?.trim() || "",
+    category: req.body.category?.trim() || "",
+    price: req.body.price?.trim() || "",
+    stock: req.body.stock?.trim() || "",
+  };
+  addProduct(newProduct);
 });
 
 export default router;

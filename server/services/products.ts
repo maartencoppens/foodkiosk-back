@@ -60,3 +60,14 @@ export async function filterProducts(search: string): Promise<Product[]> {
     throw new Error("Could not fetch news: " + error);
   }
 }
+
+export async function addProduct(product: Product): Promise<void> {
+  try {
+    const data: Category[] =
+      await sql`INSERT INTO products (image, name, category_id, price, stock)
+    VALUES (product.image, product.name, product.category, product.price, product.stock);`;
+  } catch (error) {
+    console.error("Error posting Product:", error);
+    throw new Error("Could not post Product: " + error);
+  }
+}
