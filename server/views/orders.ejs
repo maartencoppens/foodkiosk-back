@@ -19,7 +19,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/categories" aria-current="page">
+            <a class="nav-link" href="/categories">
               <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
             </a>
           </li>
@@ -30,7 +30,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/orders">
+            <a class="nav-link active" href="/orders" aria-current="page">
               <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
             </a>
           </li>
@@ -43,7 +43,7 @@
       <!-- Top Navigation -->
       <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container-fluid">
-          <h2 class="navbar-brand">Categories</h2>
+          <h2 class="navbar-brand">Orders</h2>
           <div class="d-flex align-items-center">
             <div class="dropdown me-3">
               <button
@@ -76,23 +76,24 @@
         </div>
       </header>
 
-      <!-- Categories Table -->
+      <!-- Orders Table -->
       <div class="card">
         <header class="card-header">
           <div class="d-flex justify-content-between align-items-center">
-            <h3 class="card-title h5 mb-0">All Categories</h3>
+            <h3 class="card-title h5 mb-0">All Orders</h3>
             <div class="d-flex gap-2">
-              <div class="input-group">
+              <form class="input-group">
                 <input
                   type="text"
+                  name="search"
                   class="form-control"
-                  placeholder="Search categories..."
-                  aria-label="Search categories"
+                  placeholder="Search orders..."
+                  aria-label="Search orders"
                 />
-                <button class="btn btn-outline-secondary" type="button">
+                <button class="btn btn-outline-secondary" type="submit">
                   <i class="bi bi-search"></i>
                 </button>
-              </div>
+              </form>
               <button class="btn btn-outline-secondary">
                 <i class="bi bi-funnel"></i> Filter
               </button>
@@ -104,43 +105,45 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
+                  <th scope="col">Order ID</th>
+                  <!-- <th scope="col">Customer</th> -->
+                  <th scope="col">Date</th>
+                  <th scope="col">Total</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <% data.forEach(category => { %>
-                <tr>
-                  <td><%= category.name %></td>
-                  <td>
-                    <span
-                      class="badge <%= category.status ? 'bg-success' : 'bg-danger' %>"
-                    >
-                      <%= category.status ? 'Active' : 'Inactive' %>
-                    </span>
-                  </td>
-                  <td class="category-actions">
-                    <button class="btn btn-sm btn-outline-primary">
-                      <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
+                <% data.forEach(order => { %>
+                  <tr>
+                    <td>#<%= order.order_id %></td>
+                    <!-- <td><%= order.customer_name %></td> -->
+                    <td><%= new Date(order.created_at).toLocaleDateString() %></td>
+                    <td>€<%= order.total_amount %></td>
+                    <td>
+                      <span class="badge <%= order.status === 'completed' ? 'bg-success' : 'bg-warning' %>">
+                        <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
+                      </span>
+                    </td>
+                    <td class="order-actions">
+                      <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails('<%= order.id %>')">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-success" onclick="updateOrderStatus('<%= order.id %>')">
+                        <i class="bi bi-check-circle"></i>
+                      </button>
+                    </td>
+                  </tr>
                 <% }); %>
               </tbody>
             </table>
           </div>
 
           <!-- Pagination -->
-          <nav aria-label="Category pagination" class="mt-4">
+          <nav aria-label="Order pagination" class="mt-4">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
-                  >Previous</a
-                >
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
               </li>
               <li class="page-item active">
                 <a class="page-link" href="#">1</a>
@@ -157,3 +160,15 @@
     </main>
   </div>
 </div>
+
+<script>
+function viewOrderDetails(orderId) {
+  // Implement order details view logic
+  console.log('Viewing order:', orderId);
+}
+
+function updateOrderStatus(orderId) {
+  // Implement order status update logic
+  console.log('Updating order status:', orderId);
+}
+</script> 

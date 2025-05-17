@@ -17,12 +17,14 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-ejs-layouts": "^2.5.1",
+    "multer": "^1.4.5-lts.2",
     "postgres": "^3.4.5"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
-    "@types/express": "^5.0.1",
+    "@types/express": "^4.17.22",
     "@types/express-ejs-layouts": "^2.5.4",
+    "@types/multer": "^1.4.12",
     "@vercel/node": "^3.0.0",
     "nodemon": "^3.1.9",
     "supabase": "^2.22.12",

@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 import postgres, { Sql } from "postgres";
 
 if (!process.env.POSTGRES_URL) {

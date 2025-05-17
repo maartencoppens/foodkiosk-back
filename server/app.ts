@@ -21,6 +21,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 // Middleware om formulierdata te verwerken
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware om JSON-data te verwerken
+app.use(express.json());
+
 // Routes gebruiken
 app.use("/", routes);
 app.use("/api", apiRoutes);
