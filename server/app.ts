@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import path from "path";
 import expressLayouts from "express-ejs-layouts";
+import cors from "cors";
 import routes from "./routes";
 import apiRoutes from "./api";
 
@@ -23,6 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware om JSON-data te verwerken
 app.use(express.json());
+
+// CORS middleware configureren
+app.use(cors());
 
 // Routes gebruiken
 app.use("/", routes);
