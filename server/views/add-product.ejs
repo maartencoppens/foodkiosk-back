@@ -24,12 +24,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/add-product" aria-current="page">
-              <i class="bi bi-plus-circle me-2" aria-hidden="true"></i> Add
-              Product
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/orders">
               <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
             </a>
@@ -79,11 +73,11 @@
       <!-- Add Product Form -->
       <div class="card">
         <header class="card-header">
-          <h3 class="card-title h5 mb-0">Product Details</h3>
+          <h3 class="card-title h5 mb-0"><%= isEdit ? 'Edit Product' : 'Product Details' %></h3>
         </header>
         <div class="card-body">
           <form
-            action="/add-product-form"
+            action="<%= isEdit ? `/products/edit/${product.id}` : '/add-product-form' %>"
             method="POST"
             enctype="multipart/form-data"
           >
@@ -96,7 +90,7 @@
                   class="form-control"
                   id="productName"
                   name="name"
-                  
+                  value="<%= isEdit ? product.name : '' %>"
                   required
                 />
               </div>
@@ -112,7 +106,7 @@
                 >
                   <option value="">Select a category</option>
                   <% categories.forEach(category => { %>
-                  <option value="<%= category.id %>">
+                  <option value="<%= category.id %>" <%= isEdit && product.category_id === category.id ? 'selected' : '' %>>
                     <%= category.name %>
                   </option>
                   <% }); %>
@@ -128,6 +122,7 @@
                   id="price"
                   name="price"
                   step="0.01"
+                  value="<%= isEdit ? product.price : '' %>"
                   required
                 />
               </div>
@@ -140,38 +135,50 @@
                   class="form-control"
                   id="stock"
                   name="stock"
+                  value="<%= isEdit ? product.stock : '' %>"
                   required
                 />
               </div>
 
               <!-- Product Image -->
               <div class="col-md-6">
-                <label for="productImage" class="form-label"
-                  >Product Image</label
-                >
+                <label for="productImage" class="form-label">Product Image</label>
+                <% if (isEdit) { %>
+                  <input type="hidden" name="existingImage" value="<%= product.image %>" />
+                  <div class="current-image mb-2">
+                    <img
+                      src="/uploads/<%= product.image %>"
+                      alt="Current product image"
+                      class="preview-image"
+                      id="currentImage"
+                    />
+                    <div class="form-text">Current image</div>
+                  </div>
+                <% } %>
                 <input
                   type="file"
                   class="form-control"
                   id="productImage"
                   name="image"
                   accept="image/*"
-                  required
+                  <%= !isEdit ? 'required' : '' %>
                 />
+                <div class="form-text">
+                  <%= isEdit ? 'Leave empty to keep current image' : 'Upload a new image' %>
+                </div>
                 <img
                   id="imagePreview"
-                  class="preview-image d-none"
-                  alt="Product preview"
+                  class="preview-image d-none mt-2"
+                  alt="New image preview"
                 />
               </div>
 
               <!-- Submit Button -->
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">
-                  <i class="bi bi-plus-circle me-2"></i>Add Product
+                  <i class="bi bi-<%= isEdit ? 'check' : 'plus' %>-circle me-2"></i><%= isEdit ? 'Update' : 'Add' %> Product
                 </button>
-                <a href="/products" class="btn btn-outline-secondary ms-2"
-                  >Cancel</a
-                >
+                <a href="/products" class="btn btn-outline-secondary ms-2">Cancel</a>
               </div>
             </div>
           </form>
@@ -183,18 +190,31 @@
 
 <script>
   // Image preview functionality
-  document
-    .getElementById("productImage")
-    .addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const preview = document.getElementById("imagePreview");
-          preview.src = e.target.result;
-          preview.classList.remove("d-none");
-        };
-        reader.readAsDataURL(file);
+  const productImage = document.getElementById("productImage");
+  const imagePreview = document.getElementById("imagePreview");
+  const currentImage = document.getElementById("currentImage");
+
+  productImage.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        // Show the new image preview
+        imagePreview.src = e.target.result;
+        imagePreview.classList.remove("d-none");
+        
+        // If we're editing, hide the current image
+        if (currentImage) {
+          currentImage.classList.add("d-none");
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // If no file is selected, hide the preview and show the current image
+      imagePreview.classList.add("d-none");
+      if (currentImage) {
+        currentImage.classList.remove("d-none");
       }
-    });
+    }
+  });
 </script>

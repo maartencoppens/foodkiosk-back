@@ -23,12 +23,7 @@
               <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/add-product">
-              <i class="bi bi-plus-circle me-2" aria-hidden="true"></i> Add
-              Product
-            </a>
-          </li>
+    
           <li class="nav-item">
             <a class="nav-link active" href="/orders" aria-current="page">
               <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
@@ -94,9 +89,6 @@
                   <i class="bi bi-search"></i>
                 </button>
               </form>
-              <button class="btn btn-outline-secondary">
-                <i class="bi bi-funnel"></i> Filter
-              </button>
             </div>
           </div>
         </header>
@@ -105,33 +97,31 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Order ID</th>
-                  <!-- <th scope="col">Customer</th> -->
-                  <th scope="col">Date</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col" class="w-25">Order ID</th>
+                  <th scope="col" class="w-25">Date</th>
+                  <th scope="col" class="w-25">Total</th>
+                  <th scope="col" class="w-25">Status</th>
+                  <th scope="col" class="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <% data.forEach(order => { %>
                   <tr>
                     <td>#<%= order.order_id %></td>
-                    <!-- <td><%= order.customer_name %></td> -->
                     <td><%= new Date(order.created_at).toLocaleDateString() %></td>
-                    <td>€<%= order.total_amount %></td>
+                    <td>€<%= order.items.reduce((total, item) => total + (item.quantity * item.unit_price), 0).toFixed(2) %></td>
                     <td>
-                      <span class="badge <%= order.status === 'completed' ? 'bg-success' : 'bg-warning' %>">
+                      <span class="badge bg-<%= order.order_status === 'delivered' ? 'success' : 
+                                             order.order_status === 'pending' ? 'warning' : 
+                                             order.order_status === 'confirmed' ? 'info' :
+                                             order.order_status === 'cancelled' ? 'danger' : 'secondary' %>">
                         <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
                       </span>
                     </td>
-                    <td class="order-actions">
-                      <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails('<%= order.id %>')">
+                    <td class="text-end">
+                      <a href="/orders/<%= order.order_id %>" class="btn btn-sm btn-outline-primary">
                         <i class="bi bi-eye"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-success" onclick="updateOrderStatus('<%= order.id %>')">
-                        <i class="bi bi-check-circle"></i>
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 <% }); %>
@@ -139,22 +129,7 @@
             </table>
           </div>
 
-          <!-- Pagination -->
-          <nav aria-label="Order pagination" class="mt-4">
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+         
         </div>
       </div>
     </main>
@@ -165,10 +140,5 @@
 function viewOrderDetails(orderId) {
   // Implement order details view logic
   console.log('Viewing order:', orderId);
-}
-
-function updateOrderStatus(orderId) {
-  // Implement order status update logic
-  console.log('Updating order status:', orderId);
 }
 </script> 

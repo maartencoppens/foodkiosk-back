@@ -4,8 +4,12 @@ TODO:
 - Extra zijpagina voor orders --> half klaar
 
 <!-- - api post maken voor de orders -->
-- edit producten
-- detail-pagina voor per order
+<!-- - edit producten -->
+<!-- - detail-pagina voor per order -->
+
+
+
+- github doet raar
 
 (
 
@@ -13,3 +17,5 @@ TODO:
 - database-tabel users
 
 )
+
+

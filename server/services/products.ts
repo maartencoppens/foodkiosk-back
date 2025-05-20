@@ -4,8 +4,8 @@ import sql from "./db";
 // Interface voor een nieuwsartikel
 export interface Category {
   id: number;
-  category: string;
-  slug: string;
+  name: string;
+  status: boolean;
 }
 
 export interface Product {
@@ -70,9 +70,10 @@ export async function getAllProducts(search?: string): Promise<Product[]> {
   }
 }
 
-export async function getAllOrders(): Promise<Order[]> {
+// Base query for orders that can be used by both getAllOrders and getOrderById
+async function getOrdersQuery(orderId?: number, limit?: number): Promise<any[]> {
   try {
-    const data: Order[] = await sql`
+    const data = await sql`
       SELECT
         o.id AS order_id,
         o.created_at,
@@ -93,19 +94,41 @@ export async function getAllOrders(): Promise<Order[]> {
       LEFT JOIN "order-items" oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN categories c ON p.category_id = c.id
-      ORDER BY o.id, oi.id;
+      ${orderId ? sql`WHERE o.id = ${orderId}` : sql``}
+      ORDER BY o.created_at DESC
+      ${limit ? sql`LIMIT ${limit}` : sql``};
     `;
-    console.log(data);
     return data;
   } catch (error) {
-    console.error("Error fetching news:", error);
-    throw new Error("Could not fetch news: " + error);
+    console.error("Error fetching orders:", error);
+    throw new Error("Could not fetch orders: " + error);
   }
+}
+
+export async function getAllOrders(): Promise<Order[]> {
+  return getOrdersQuery();
+}
+
+export async function getRecentOrders(limit: number = 10): Promise<Order[]> {
+  return getOrdersQuery(undefined, limit);
+}
+
+export async function getOrderById(id: number): Promise<any> {
+  return getOrdersQuery(id);
 }
 
 export async function deleteProduct(id: number): Promise<void> {
   try {
     await sql`DELETE FROM products WHERE id = ${id}`;
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw new Error("Could not delete product: " + error);
+  }
+}
+
+export async function deleteCategory(id: number): Promise<void> {
+  try {
+    await sql`DELETE FROM categories WHERE id = ${id}`;
   } catch (error) {
     console.error("Error deleting product:", error);
     throw new Error("Could not delete product: " + error);
@@ -162,5 +185,84 @@ export async function createOrder(order: CreateOrder): Promise<number> {
   } catch (error) {
     console.error("Error creating order:", error);
     throw new Error("Could not create order: " + error);
+  }
+}
+
+export async function updateProduct(id: number, product: Omit<Product, "id">): Promise<void> {
+  try {
+    await sql`
+      UPDATE products 
+      SET name = ${product.name},
+          category_id = ${product.category_id},
+          price = ${product.price},
+          stock = ${product.stock},
+          image = ${product.image}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw new Error("Could not update product: " + error);
+  }
+}
+
+export async function getProductById(id: number): Promise<Product | null> {
+  try {
+    const [product] = await sql<Product[]>`
+      SELECT 
+        p.id, 
+        p.name, 
+        p.image, 
+        p.price, 
+        p.stock,
+        p.category_id
+      FROM 
+        products p
+      WHERE 
+        p.id = ${id}
+    `;
+    return product || null;
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    throw new Error("Could not fetch product: " + error);
+  }
+}
+
+export async function addCategory(category: Omit<Category, "id">): Promise<void> {
+  try {
+    await sql`
+      INSERT INTO categories (name, status)
+      VALUES (${category.name}, ${category.status});
+    `;
+  } catch (error) {
+    console.error("Error adding category:", error);
+    throw new Error("Could not add category: " + error);
+  }
+}
+
+export async function getCategoryById(id: number): Promise<Category | null> {
+  try {
+    const [category] = await sql<Category[]>`
+      SELECT id, name, status
+      FROM categories
+      WHERE id = ${id}
+    `;
+    return category || null;
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw new Error("Could not fetch category: " + error);
+  }
+}
+
+export async function updateCategory(id: number, category: Omit<Category, "id">): Promise<void> {
+  try {
+    await sql`
+      UPDATE categories 
+      SET name = ${category.name},
+          status = ${category.status}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    console.error("Error updating category:", error);
+    throw new Error("Could not update category: " + error);
   }
 }
