@@ -8,10 +8,6 @@
   ],
   "routes": [
     {
-      "src": "/css/(.*)",
-      "dest": "/server/public/css/$1"
-    },
-    {
       "src": "/images/(.*)",
       "dest": "/server/public/images/$1"
     },
@@ -20,4 +16,4 @@
       "dest": "/server/app.ts"
     }
   ]
-} 
+}

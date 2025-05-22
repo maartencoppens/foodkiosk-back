@@ -1,22 +1,24 @@
 import express, { Request, Response, Router } from "express";
 import {
   addProduct,
-  Category,
   deleteProduct,
-  filterProducts,
-  getAllCategories,
-  getAllOrders,
   getAllProducts,
-  Product,
   updateProduct,
   getProductById,
-  getOrderById,
-  getRecentOrders,
+} from "./services/products";
+import {
+  getAllCategories,
   deleteCategory,
   addCategory,
   getCategoryById,
   updateCategory,
-} from "./services/products";
+} from "./services/categories";
+import {
+  getAllOrders,
+  getOrderById,
+  getRecentOrders,
+} from "./services/orders";
+import { Product, Category } from "./services/interfaces";
 import { upload } from "./imagePost";
 import fs from 'fs';
 import path from 'path';
