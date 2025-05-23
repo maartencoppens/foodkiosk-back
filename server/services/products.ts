@@ -6,18 +6,18 @@ export async function getAllProducts(search?: string): Promise<Product[]> {
   try {
     const data = await sql<Product[]>`
       SELECT 
-        p.id, 
-        p.name AS product_name, 
-        p.image, 
-        p.price, 
-        p.stock, 
-        c.name AS category_name
+      p.id, 
+      p.name AS product_name, 
+      p.image, 
+      p.price, 
+      p.stock, 
+      p.category_id,
+      c.name AS category_name
       FROM 
-        products p
+      products p
       JOIN 
-        categories c ON p.category_id = c.id
+      categories c ON p.category_id = c.id
       ${search ? sql`WHERE p.name LIKE ${`%${search}%`}` : sql``}
-      
     `;
     return data;
   } catch (error) {
@@ -48,7 +48,6 @@ export async function filterProducts(search: string): Promise<Product[]> {
 
 export async function addProduct(product: Omit<Product, "id">): Promise<void> {
   try {
-
     await sql`
       INSERT INTO products (name, category_id, price, stock, image)
       VALUES (${product.name}, ${product.category_id}, ${product.price}, ${product.stock}, ${product.image});
@@ -59,7 +58,10 @@ export async function addProduct(product: Omit<Product, "id">): Promise<void> {
   }
 }
 
-export async function updateProduct(id: number, product: Omit<Product, "id">): Promise<void> {
+export async function updateProduct(
+  id: number,
+  product: Omit<Product, "id">
+): Promise<void> {
   try {
     await sql`
       UPDATE products 
