@@ -173,6 +173,7 @@ router.post(
 
       const newProduct = {
         name: req.body.name?.trim(),
+        description: req.body.description?.trim() || "",
         category_id: parseInt(req.body.category?.trim() || "1"),
         price: parseFloat(req.body.price?.trim() || "1"),
         stock: parseInt(req.body.stock?.trim() || "1"),
@@ -265,6 +266,7 @@ router.post(
 
       const updatedProduct = {
         name: req.body.name?.trim(),
+        description: req.body.description?.trim() || "",
         category_id: parseInt(req.body.category?.trim() || "1"),
         price: parseFloat(req.body.price?.trim() || "1"),
         stock: parseInt(req.body.stock?.trim() || "1"),

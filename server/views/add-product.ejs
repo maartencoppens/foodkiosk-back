@@ -95,6 +95,18 @@
                 />
               </div>
 
+              <!-- Description -->
+              <div class="col-md-6">
+                <label for="description" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  rows="3"
+                  required
+                ><%= isEdit ? product.description : '' %></textarea>
+              </div>
+
               <!-- Category -->
               <div class="col-md-6">
                 <label for="category" class="form-label">Category</label>
