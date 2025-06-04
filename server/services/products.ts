@@ -7,6 +7,7 @@ export async function getAllProducts(search?: string): Promise<Product[]> {
     const data = await sql<Product[]>`
       SELECT 
       p.id, 
+      p.description
       p.name AS product_name, 
       p.image, 
       p.price, 
