@@ -7,7 +7,7 @@ export async function getAllProducts(search?: string): Promise<Product[]> {
     const data = await sql<Product[]>`
       SELECT 
       p.id, 
-      p.description
+      p.description,
       p.name AS product_name, 
       p.image, 
       p.price, 
@@ -50,8 +50,8 @@ export async function filterProducts(search: string): Promise<Product[]> {
 export async function addProduct(product: Omit<Product, "id">): Promise<void> {
   try {
     await sql`
-      INSERT INTO products (name, category_id, price, stock, image)
-      VALUES (${product.name}, ${product.category_id}, ${product.price}, ${product.stock}, ${product.image});
+      INSERT INTO products (name, description, category_id, price, stock, image)
+      VALUES (${product.name}, ${product.description}, ${product.category_id}, ${product.price}, ${product.stock}, ${product.image});
     `;
   } catch (error) {
     console.error("Error adding product:", error);
@@ -67,6 +67,7 @@ export async function updateProduct(
     await sql`
       UPDATE products 
       SET name = ${product.name},
+          description = ${product.description},
           category_id = ${product.category_id},
           price = ${product.price},
           stock = ${product.stock},
@@ -84,7 +85,8 @@ export async function getProductById(id: number): Promise<Product | null> {
     const [product] = await sql<Product[]>`
       SELECT 
         p.id, 
-        p.name, 
+        p.name,
+        p.description,
         p.image, 
         p.price, 
         p.stock,
