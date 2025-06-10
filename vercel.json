@@ -4,6 +4,10 @@
     {
       "src": "server/app.ts",
       "use": "@vercel/node"
+    },
+    {
+      "src": "server/public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
