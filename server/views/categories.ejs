@@ -88,7 +88,7 @@
                   <i class="bi bi-search"></i>
                 </button>
               </div>
-              <a href="/add-category" class="btn btn-primary">
+              <a href="/categories/add" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Add Category
               </a>
             </div>
@@ -99,16 +99,24 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th scope="col" class="w-15">Image</th>
                   <th scope="col" class="w-50">Name</th>
-                  <th scope="col" class="w-25">Status</th>
+                  <th scope="col" class="w-15 text-end">Status</th>
                   <th scope="col" class="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <% data.forEach(category => { %>
                 <tr>
-                  <td><%= category.name %></td>
                   <td>
+                    <img
+                      src="/images/<%= category.image %>"
+                      alt="<%= category.name %>"
+                      class="product-image"
+                    />
+                  </td>
+                  <td><%= category.name %></td>
+                  <td class="text-end">
                     <span
                       class="badge <%= category.status ? 'bg-success' : 'bg-danger' %>"
                     >

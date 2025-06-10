@@ -25,8 +25,8 @@ export async function addCategory(
 ): Promise<void> {
   try {
     await sql`
-        INSERT INTO categories (name, status)
-        VALUES (${category.name}, ${category.status});
+        INSERT INTO categories (name, status, image)
+        VALUES (${category.name}, ${category.status}, ${category.image});
       `;
   } catch (error) {
     console.error("Error adding category:", error);
@@ -37,7 +37,7 @@ export async function addCategory(
 export async function getCategoryById(id: number): Promise<Category | null> {
   try {
     const [category] = await sql<Category[]>`
-        SELECT id, name, status
+        SELECT id, name, status, image
         FROM categories
         WHERE id = ${id}
       `;
@@ -56,7 +56,8 @@ export async function updateCategory(
     await sql`
         UPDATE categories 
         SET name = ${category.name},
-            status = ${category.status}
+            status = ${category.status},
+            image = ${category.image}
         WHERE id = ${id}
       `;
   } catch (error) {

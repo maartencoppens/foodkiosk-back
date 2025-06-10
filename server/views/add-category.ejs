@@ -77,8 +77,9 @@
         </header>
         <div class="card-body">
           <form
-            action="<%= isEdit ? `/categories/edit/${category.id}` : '/add-category-form' %>"
+            action="<%= isEdit ? `/categories/edit/${category.id}` : '/categories/add' %>"
             method="POST"
+            enctype="multipart/form-data"
           >
             <div class="row g-3">
               <!-- Category Name -->
@@ -108,6 +109,39 @@
                 </select>
               </div>
 
+              <!-- Category Image -->
+              <div class="col-md-6">
+                <label for="categoryImage" class="form-label">Category Image</label>
+                <% if (isEdit) { %>
+                  <input type="hidden" name="existingImage" value="<%= category.image %>" />
+                  <div class="current-image mb-2">
+                    <img
+                      src="/images/<%= category.image %>"
+                      alt="Current category image"
+                      class="preview-image"
+                      id="currentImage"
+                    />
+                    <div class="form-text">Current image</div>
+                  </div>
+                <% } %>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="categoryImage"
+                  name="image"
+                  accept="image/*"
+                  <%= !isEdit ? 'required' : '' %>
+                />
+                <div class="form-text">
+                  <%= isEdit ? 'Leave empty to keep current image' : 'Upload a new image' %>
+                </div>
+                <img
+                  id="imagePreview"
+                  class="preview-image d-none mt-2"
+                  alt="New image preview"
+                />
+              </div>
+
               <!-- Submit Button -->
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">
@@ -122,3 +156,34 @@
     </main>
   </div>
 </div>
+
+<script>
+  // Image preview functionality
+  const categoryImage = document.getElementById("categoryImage");
+  const imagePreview = document.getElementById("imagePreview");
+  const currentImage = document.getElementById("currentImage");
+
+  categoryImage.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        // Show the new image preview
+        imagePreview.src = e.target.result;
+        imagePreview.classList.remove("d-none");
+        
+        // If we're editing, hide the current image
+        if (currentImage) {
+          currentImage.classList.add("d-none");
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // If no file is selected, hide the preview and show the current image
+      imagePreview.classList.add("d-none");
+      if (currentImage) {
+        currentImage.classList.remove("d-none");
+      }
+    }
+  });
+</script>

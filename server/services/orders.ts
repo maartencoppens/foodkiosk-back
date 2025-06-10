@@ -8,30 +8,32 @@ async function getOrdersQuery(
 ): Promise<any[]> {
   try {
     const data = await sql`
-        SELECT
-          o.id AS order_id,
-          o.created_at,
-          o.status AS order_status,
-          oi.id AS order_item_id,
-          oi.product_id,
-          oi.quantity,
-          oi.unit_price,
-          p.name AS product_name,
-          p.image AS product_image,
-          p.price AS product_price,
-          p.stock AS product_stock,
-          c.id AS category_id,
-          c.name AS category_name,
-          c.slug AS category_slug,
-          c.status AS category_status
-        FROM orders o
-        LEFT JOIN "order-items" oi ON o.id = oi.order_id
-        LEFT JOIN products p ON oi.product_id = p.id
-        LEFT JOIN categories c ON p.category_id = c.id
-        ${orderId ? sql`WHERE o.id = ${orderId}` : sql``}
-        ORDER BY o.created_at DESC
-        ${limit ? sql`LIMIT ${limit}` : sql``};
-      `;
+  SELECT
+    o.id AS order_id,
+    o.created_at,
+    o.status AS order_status,
+    oi.id AS order_item_id,
+    oi.product_id,
+    oi.quantity,
+    oi.unit_price,
+    p.id AS product_id,
+    p.name AS product_name,
+    p.image AS product_image,
+    p.price AS product_price,
+    p.stock AS product_stock,
+    c.id AS category_id,
+    c.name AS category_name,
+    c.slug AS category_slug,
+    c.status AS category_status
+  FROM orders o
+  LEFT JOIN "order-items" oi ON o.id = oi.order_id
+  LEFT JOIN products p ON oi.product_id = p.id
+  LEFT JOIN categories c ON p.category_id = c.id
+  ${orderId ? sql`WHERE o.id = ${orderId}` : sql``}
+  ORDER BY o.created_at DESC
+  ${limit ? sql`LIMIT ${limit}` : sql``};
+`;
+
     return data;
   } catch (error) {
     console.error("Error fetching orders:", error);

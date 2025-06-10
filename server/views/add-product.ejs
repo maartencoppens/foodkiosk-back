@@ -14,7 +14,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/products">
+            <a class="nav-link active" href="/products">
               <i class="bi bi-box me-2" aria-hidden="true"></i> Products
             </a>
           </li>
@@ -77,7 +77,7 @@
         </header>
         <div class="card-body">
           <form
-            action="<%= isEdit ? `/products/edit/${product.id}` : '/add-product-form' %>"
+            action="<%= isEdit ? `/products/edit/${product.id}` : '/products/add' %>"
             method="POST"
             enctype="multipart/form-data"
           >
@@ -159,7 +159,7 @@
                   <input type="hidden" name="existingImage" value="<%= product.image %>" />
                   <div class="current-image mb-2">
                     <img
-                      src="/uploads/<%= product.image %>"
+                      src="/images/<%= product.image %>"
                       alt="Current product image"
                       class="preview-image"
                       id="currentImage"

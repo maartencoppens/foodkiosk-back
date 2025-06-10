@@ -24,12 +24,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/add-product">
-              <i class="bi bi-plus-circle me-2" aria-hidden="true"></i> Add
-              Product
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link active" href="/orders" aria-current="page">
               <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
             </a>
@@ -110,7 +104,7 @@
                     <td>
                       <div class="d-flex align-items-center">
                         <% if (item.product_image) { %>
-                          <img src="/uploads/<%= item.product_image %>" alt="<%= item.product_name %>" class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                          <img src="/images/<%= item.product_image %>" alt="<%= item.product_name %>" class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
                         <% } %>
                         <%= item.product_name %>
                       </div>

@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import path from "path";
 import expressLayouts from "express-ejs-layouts";
 import cors from "cors";
-import routes from "./routes";
+import routes from "./routes/routes";
 import apiRoutes from "./api";
 
 const app: Application = express();
@@ -17,7 +17,7 @@ app.use(expressLayouts);
 app.set("layout", "layouts/main");
 
 // Middleware om statische bestanden te serveren
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Middleware om formulierdata te verwerken
 app.use(express.urlencoded({ extended: true }));
