@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction, Router } from "express";
 import bcrypt from "bcrypt";
-import session from "express-session";
 
-declare module 'express-session' {
-  interface Session {
-    isAdmin?: boolean;
+declare module 'express-serve-static-core' {
+  interface Request {
+    session: {
+      isAdmin?: boolean;
+    } | null;
   }
 }
 
@@ -21,9 +22,8 @@ router.get("/login", (req: Request, res: Response) => {
 
 // Logout route
 router.get("/logout", (req: Request, res: Response) => {
-  req.session.destroy(() => {
-    res.redirect("/login");
-  });
+  req.session = null;
+  res.redirect("/login");
 });
 
 export const handleLogin = async (req: Request, res: Response) => {
@@ -39,7 +39,7 @@ export const handleLogin = async (req: Request, res: Response) => {
   const isValid = await bcrypt.compare(password, adminHash);
 
   if (isValid) {
-    req.session.isAdmin = true;
+    req.session = { isAdmin: true };
     return res.redirect("/");
   }
 

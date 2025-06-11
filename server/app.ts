@@ -5,7 +5,7 @@ import cors from "cors";
 import routes from "./routes/routes";
 import apiRoutes from "./api";
 import loginRoutes, { handleLogin, adminOnly } from "./routes/login";
-import session from "express-session";
+import cookieSession from "cookie-session";
 
 const app: Application = express();
 const PORT: number = 3000;
@@ -36,16 +36,14 @@ if (!process.env.SESSION_SECRET) {
   process.exit(1);
 }
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  },
-  rolling: true // Refresh the session on each request
+// Cookie session middleware
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET],
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  secure: process.env.NODE_ENV === 'production',
+  httpOnly: true,
+  sameSite: 'lax'
 }));
 
 // Routes gebruiken
