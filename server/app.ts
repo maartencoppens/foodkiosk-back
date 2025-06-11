@@ -4,6 +4,8 @@ import expressLayouts from "express-ejs-layouts";
 import cors from "cors";
 import routes from "./routes/routes";
 import apiRoutes from "./api";
+import loginRoutes, { handleLogin, adminOnly } from "./routes/login";
+import session from "express-session";
 
 const app: Application = express();
 const PORT: number = 3000;
@@ -28,8 +30,22 @@ app.use(express.json());
 // CORS middleware configureren
 app.use(cors());
 
+app.use(session({
+  secret: process.env.SESSION_SECRET!,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  },
+  rolling: true // Refresh the session on each request
+}));
+
 // Routes gebruiken
-app.use("/", routes);
+app.post("/login", handleLogin);
+app.use("/", loginRoutes);
+app.use("/", adminOnly, routes);
 app.use("/api", apiRoutes);
 
 // Server starten

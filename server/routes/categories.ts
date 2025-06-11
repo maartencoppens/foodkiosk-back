@@ -16,14 +16,19 @@ const router: Router = express.Router();
 // Get all categories
 router.get("/", async (req: Request, res: Response): Promise<void> => {
   const data: Category[] = await getAllCategories();
-  res.render("categories", { title: "Categories", data });
+  res.render("categories", { 
+    title: "Categories", 
+    data,
+    currentPage: 'categories'
+  });
 });
 
 // Get add category form
 router.get("/add", async (req: Request, res: Response) => {
   res.render("add-category", { 
     title: "Add Category", 
-    isEdit: false 
+    isEdit: false,
+    currentPage: 'categories'
   });
 });
 
@@ -86,7 +91,8 @@ router.get("/edit/:id", async (req: Request, res: Response): Promise<void> => {
     res.render("add-category", { 
       title: "Edit Category", 
       category,
-      isEdit: true 
+      isEdit: true,
+      currentPage: 'categories'
     });
   } catch (error) {
     console.error("Error loading category:", error);

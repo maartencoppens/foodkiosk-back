@@ -1,202 +1,127 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <aside class="col-md-3 col-lg-2 px-0 sidebar">
-      <header class="p-3">
-        <h1 class="h4 text-white">FoodKiosk</h1>
-      </header>
-      <nav aria-label="Main navigation">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/products">
-              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/categories">
-              <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/orders">
-              <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="col-md-9 col-lg-10 main-content">
-      <!-- Top Navigation -->
-      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-          <h2 class="navbar-brand">Add New Product</h2>
-          <div class="d-flex align-items-center">
-            <div class="dropdown me-3">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="notificationsDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-bell" aria-hidden="true"></i>
-                <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                >
-                  3
-                </span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="userDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-person-circle" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
+<!-- Add Product Form -->
+<div class="card">
+  <header class="card-header">
+    <h3 class="card-title h5 mb-0"><%= title %></h3>
+  </header>
+  <div class="card-body">
+    <form
+      action="<%= isEdit ? `/products/edit/${product.id}` : '/products/add' %>"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div class="row g-3">
+        <!-- Product Name -->
+        <div class="col-md-6">
+          <label for="productName" class="form-label">Product Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productName"
+            name="name"
+            value="<%= isEdit ? product.name : '' %>"
+            required
+          />
         </div>
-      </header>
 
-      <!-- Add Product Form -->
-      <div class="card">
-        <header class="card-header">
-          <h3 class="card-title h5 mb-0"><%= isEdit ? 'Edit Product' : 'Product Details' %></h3>
-        </header>
-        <div class="card-body">
-          <form
-            action="<%= isEdit ? `/products/edit/${product.id}` : '/products/add' %>"
-            method="POST"
-            enctype="multipart/form-data"
+        <!-- Description -->
+        <div class="col-md-6">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="3"
+            required
+          ><%= isEdit ? product.description : '' %></textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+          <label for="category" class="form-label">Category</label>
+          <select
+            class="form-select"
+            id="category"
+            name="category"
+            required
           >
-            <div class="row g-3">
-              <!-- Product Name -->
-              <div class="col-md-6">
-                <label for="productName" class="form-label">Product Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="productName"
-                  name="name"
-                  value="<%= isEdit ? product.name : '' %>"
-                  required
-                />
-              </div>
+            <option value="">Select a category</option>
+            <% categories.forEach(category => { %>
+            <option value="<%= category.id %>" <%= isEdit && product.category_id === category.id ? 'selected' : '' %>>
+              <%= category.name %>
+            </option>
+            <% }); %>
+          </select>
+        </div>
 
-              <!-- Description -->
-              <div class="col-md-6">
-                <label for="description" class="form-label">Description</label>
-                <textarea
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  rows="3"
-                  required
-                ><%= isEdit ? product.description : '' %></textarea>
-              </div>
+        <!-- Price -->
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price (€)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            name="price"
+            step="0.01"
+            value="<%= isEdit ? product.price : '' %>"
+            required
+          />
+        </div>
 
-              <!-- Category -->
-              <div class="col-md-6">
-                <label for="category" class="form-label">Category</label>
-                <select
-                  class="form-select"
-                  id="category"
-                  name="category"
-                  required
-                >
-                  <option value="">Select a category</option>
-                  <% categories.forEach(category => { %>
-                  <option value="<%= category.id %>" <%= isEdit && product.category_id === category.id ? 'selected' : '' %>>
-                    <%= category.name %>
-                  </option>
-                  <% }); %>
-                </select>
-              </div>
+        <!-- Stock -->
+        <div class="col-md-6">
+          <label for="stock" class="form-label">Initial Stock</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stock"
+            name="stock"
+            value="<%= isEdit ? product.stock : '' %>"
+            required
+          />
+        </div>
 
-              <!-- Price -->
-              <div class="col-md-6">
-                <label for="price" class="form-label">Price (€)</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="price"
-                  name="price"
-                  step="0.01"
-                  value="<%= isEdit ? product.price : '' %>"
-                  required
-                />
-              </div>
-
-              <!-- Stock -->
-              <div class="col-md-6">
-                <label for="stock" class="form-label">Initial Stock</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="stock"
-                  name="stock"
-                  value="<%= isEdit ? product.stock : '' %>"
-                  required
-                />
-              </div>
-
-              <!-- Product Image -->
-              <div class="col-md-6">
-                <label for="productImage" class="form-label">Product Image</label>
-                <% if (isEdit) { %>
-                  <input type="hidden" name="existingImage" value="<%= product.image %>" />
-                  <div class="current-image mb-2">
-                    <img
-                      src="/images/<%= product.image %>"
-                      alt="Current product image"
-                      class="preview-image"
-                      id="currentImage"
-                    />
-                    <div class="form-text">Current image</div>
-                  </div>
-                <% } %>
-                <input
-                  type="file"
-                  class="form-control"
-                  id="productImage"
-                  name="image"
-                  accept="image/*"
-                  <%= !isEdit ? 'required' : '' %>
-                />
-                <div class="form-text">
-                  <%= isEdit ? 'Leave empty to keep current image' : 'Upload a new image' %>
-                </div>
-                <img
-                  id="imagePreview"
-                  class="preview-image d-none mt-2"
-                  alt="New image preview"
-                />
-              </div>
-
-              <!-- Submit Button -->
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">
-                  <i class="bi bi-<%= isEdit ? 'check' : 'plus' %>-circle me-2"></i><%= isEdit ? 'Update' : 'Add' %> Product
-                </button>
-                <a href="/products" class="btn btn-outline-secondary ms-2">Cancel</a>
-              </div>
+        <!-- Product Image -->
+        <div class="col-md-6">
+          <label for="productImage" class="form-label">Product Image</label>
+          <% if (isEdit) { %>
+            <input type="hidden" name="existingImage" value="<%= product.image %>" />
+            <div class="current-image mb-2">
+              <img
+                src="/images/<%= product.image %>"
+                alt="Current product image"
+                class="preview-image"
+                id="currentImage"
+              />
+              <div class="form-text">Current image</div>
             </div>
-          </form>
+          <% } %>
+          <input
+            type="file"
+            class="form-control"
+            id="productImage"
+            name="image"
+            accept="image/*"
+            <%= !isEdit ? 'required' : '' %>
+          />
+          <div class="form-text">
+            <%= isEdit ? 'Leave empty to keep current image' : 'Upload a new image' %>
+          </div>
+          <img
+            id="imagePreview"
+            class="preview-image d-none mt-2"
+            alt="New image preview"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-<%= isEdit ? 'check' : 'plus' %>-circle me-2"></i><%= isEdit ? 'Update' : 'Add' %> Product
+          </button>
+          <a href="/products" class="btn btn-outline-secondary ms-2">Cancel</a>
         </div>
       </div>
-    </main>
+    </form>
   </div>
 </div>
 

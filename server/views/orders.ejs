@@ -1,138 +1,60 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <aside class="col-md-3 col-lg-2 px-0 sidebar">
-      <header class="p-3">
-        <h1 class="h4 text-white">FoodKiosk</h1>
-      </header>
-      <nav aria-label="Main navigation">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/products">
-              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/categories">
-              <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
-            </a>
-          </li>
-    
-          <li class="nav-item">
-            <a class="nav-link active" href="/orders" aria-current="page">
-              <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="col-md-9 col-lg-10 main-content">
-      <!-- Top Navigation -->
-      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-          <h2 class="navbar-brand">Orders</h2>
-          <div class="d-flex align-items-center">
-            <div class="dropdown me-3">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="notificationsDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-bell" aria-hidden="true"></i>
-                <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                >
-                  3
-                </span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="userDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-person-circle" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Orders Table -->
-      <div class="card">
-        <header class="card-header">
-          <div class="d-flex justify-content-between align-items-center">
-            <h3 class="card-title h5 mb-0">All Orders</h3>
-            <div class="d-flex gap-2">
-              <form class="input-group">
-                <input
-                  type="text"
-                  name="search"
-                  class="form-control"
-                  placeholder="Search orders..."
-                  aria-label="Search orders"
-                />
-                <button class="btn btn-outline-secondary" type="submit">
-                  <i class="bi bi-search"></i>
-                </button>
-              </form>
-            </div>
-          </div>
-        </header>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col" class="w-25">Order ID</th>
-                  <th scope="col" class="w-25">Date</th>
-                  <th scope="col" class="w-25">Total</th>
-                  <th scope="col" class="w-25">Status</th>
-                  <th scope="col" class="text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% data.forEach(order => { %>
-                  <tr>
-                    <td>#<%= order.order_id %></td>
-                    <td><%= new Date(order.created_at).toLocaleDateString() %></td>
-                    <td>€<%= order.items.reduce((total, item) => total + (item.quantity * item.unit_price), 0).toFixed(2) %></td>
-                    <td>
-                      <span class="badge bg-<%= order.order_status === 'delivered' ? 'success' : 
-                                             order.order_status === 'pending' ? 'warning' : 
-                                             order.order_status === 'confirmed' ? 'info' :
-                                             order.order_status === 'cancelled' ? 'danger' : 'secondary' %>">
-                        <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
-                      </span>
-                    </td>
-                    <td class="text-end">
-                      <a href="/orders/<%= order.order_id %>" class="btn btn-sm btn-outline-primary">
-                        <i class="bi bi-eye"></i>
-                      </a>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-
-         
-        </div>
+<!-- Orders Table -->
+<div class="card">
+  <header class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="card-title h5 mb-0"><%= title %></h3>
+      <div class="d-flex gap-2">
+        <form class="input-group">
+          <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search orders..."
+            aria-label="Search orders"
+          />
+          <button class="btn btn-outline-secondary" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
       </div>
-    </main>
+    </div>
+  </header>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" class="w-25">Order ID</th>
+            <th scope="col" class="w-25">Date</th>
+            <th scope="col" class="w-25">Total</th>
+            <th scope="col" class="w-25">Status</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(order => { %>
+            <tr>
+              <td>#<%= order.order_id %></td>
+              <td><%= new Date(order.created_at).toLocaleDateString() %></td>
+              <td>€<%= order.items.reduce((total, item) => total + (item.quantity * item.unit_price), 0).toFixed(2) %></td>
+              <td>
+                <span class="badge bg-<%= order.order_status === 'delivered' ? 'success' : 
+                                       order.order_status === 'pending' ? 'warning' : 
+                                       order.order_status === 'confirmed' ? 'info' :
+                                       order.order_status === 'cancelled' ? 'danger' : 'secondary' %>">
+                  <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
+                </span>
+              </td>
+              <td class="text-end">
+                <a href="/orders/<%= order.order_id %>" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-eye"></i>
+                </a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

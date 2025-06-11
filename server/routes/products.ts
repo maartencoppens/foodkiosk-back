@@ -18,7 +18,11 @@ const router: Router = express.Router();
 router.get("/", async (req: Request, res: Response): Promise<void> => {
   const search: string = req.query.search?.toString() || "";
   const data: Product[] = await getAllProducts(search);
-  res.render("products", { title: "Products", data });
+  res.render("products", { 
+    title: "Products", 
+    data,
+    currentPage: 'products'
+  });
 });
 
 // Get add product form
@@ -27,7 +31,8 @@ router.get("/add", async (req: Request, res: Response) => {
   res.render("add-product", { 
     title: "Add Product", 
     categories,
-    isEdit: false 
+    isEdit: false,
+    currentPage: 'products'
   });
 });
 
@@ -96,7 +101,8 @@ router.get("/edit/:id", async (req: Request, res: Response): Promise<void> => {
       title: "Edit Product", 
       categories,
       product,
-      isEdit: true 
+      isEdit: true,
+      currentPage: 'products'
     });
   } catch (error) {
     console.error("Error loading product:", error);

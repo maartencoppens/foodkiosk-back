@@ -1,131 +1,80 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <aside class="col-md-3 col-lg-2 px-0 sidebar">
-      <header class="p-3">
-        <h1 class="h4 text-white">FoodKiosk</h1>
-      </header>
-      <nav aria-label="Main navigation">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/products">
-              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/categories">
-              <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/orders" aria-current="page">
-              <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="col-md-9 col-lg-10 main-content">
-      <!-- Top Navigation -->
-      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-          <h2 class="navbar-brand">Order Details</h2>
-          <div class="d-flex align-items-center">
-            <a href="/orders" class="btn btn-outline-secondary me-2">
-              <i class="bi bi-arrow-left"></i> Back to Orders
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <!-- Order Details -->
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <h3 class="h5 mb-3">Order Information</h3>
-              <dl class="row">
-                <dt class="col-sm-4">Order ID</dt>
-                <dd class="col-sm-8">#<%= order.order_id %></dd>
-                
-                <dt class="col-sm-4">Date</dt>
-                <dd class="col-sm-8"><%= new Date(order.created_at).toLocaleString() %></dd>
-                
-                <dt class="col-sm-4">Status</dt>
-                <dd class="col-sm-8">
-                  <span class="badge <%= order.order_status === 'completed' ? 'bg-success' : 'bg-warning' %>">
-                    <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
-                  </span>
-                </dd>
-              </dl>
-            </div>
-            <div class="col-md-6">
-              <h3 class="h5 mb-3">Order Summary</h3>
-              <dl class="row">
-                <dt class="col-sm-4">Total Items</dt>
-                <dd class="col-sm-8"><%= items.length %></dd>
-                
-                <dt class="col-sm-4">Total Amount</dt>
-                <dd class="col-sm-8">€<%= totalAmount.toFixed(2) %></dd>
-              </dl>
-            </div>
-          </div>
-        </div>
+<!-- Order Details -->
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h3 class="h5 mb-3"><%= title %></h3>
+        <dl class="row">
+          <dt class="col-sm-4">Order ID</dt>
+          <dd class="col-sm-8">#<%= order.order_id %></dd>
+          
+          <dt class="col-sm-4">Date</dt>
+          <dd class="col-sm-8"><%= new Date(order.created_at).toLocaleString() %></dd>
+          
+          <dt class="col-sm-4">Status</dt>
+          <dd class="col-sm-8">
+            <span class="badge <%= order.order_status === 'completed' ? 'bg-success' : 'bg-warning' %>">
+              <%= order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1) %>
+            </span>
+          </dd>
+        </dl>
       </div>
-
-      <!-- Order Items -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="h5 mb-0">Order Items</h3>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col" class="w-30">Product</th>
-                  <th scope="col" class="w-20">Category</th>
-                  <th scope="col" class="w-15">Quantity</th>
-                  <th scope="col" class="w-15">Unit Price</th>
-                  <th scope="col" class="text-end">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% items.forEach(item => { %>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <% if (item.product_image) { %>
-                          <img src="/images/<%= item.product_image %>" alt="<%= item.product_name %>" class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
-                        <% } %>
-                        <%= item.product_name %>
-                      </div>
-                    </td>
-                    <td><%= item.category_name %></td>
-                    <td><%= item.quantity %></td>
-                    <td>€<%= item.unit_price.toFixed(2) %></td>
-                    <td class="text-end">€<%= (item.quantity * item.unit_price).toFixed(2) %></td>
-                  </tr>
-                <% }); %>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="4" class="text-end"><strong>Total:</strong></td>
-                  <td class="text-end"><strong>€<%= totalAmount.toFixed(2) %></strong></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
+      <div class="col-md-6">
+        <h3 class="h5 mb-3">Order Summary</h3>
+        <dl class="row">
+          <dt class="col-sm-4">Total Items</dt>
+          <dd class="col-sm-8"><%= items.length %></dd>
+          
+          <dt class="col-sm-4">Total Amount</dt>
+          <dd class="col-sm-8">€<%= totalAmount.toFixed(2) %></dd>
+        </dl>
       </div>
-    </main>
+    </div>
+  </div>
+</div>
+
+<!-- Order Items -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="h5 mb-0">Order Items</h3>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" class="w-30">Product</th>
+            <th scope="col" class="w-20">Category</th>
+            <th scope="col" class="w-15">Quantity</th>
+            <th scope="col" class="w-15">Unit Price</th>
+            <th scope="col" class="text-end">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(item => { %>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <% if (item.product_image) { %>
+                    <img src="/images/<%= item.product_image %>" alt="<%= item.product_name %>" class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                  <% } %>
+                  <%= item.product_name %>
+                </div>
+              </td>
+              <td><%= item.category_name %></td>
+              <td><%= item.quantity %></td>
+              <td>€<%= item.unit_price.toFixed(2) %></td>
+              <td class="text-end">€<%= (item.quantity * item.unit_price).toFixed(2) %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+            <td class="text-end"><strong>€<%= totalAmount.toFixed(2) %></strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div> 

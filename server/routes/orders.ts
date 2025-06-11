@@ -37,7 +37,11 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     return acc;
   }, []);
 
-  res.render("orders", { title: "Orders", data: orders });
+  res.render("orders", { 
+    title: "Orders", 
+    data: orders,
+    currentPage: 'orders'
+  });
 });
 
 // Get order details
@@ -64,7 +68,8 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
       title: `Order #${orderId}`, 
       order: orderData[0],
       items: orderData,
-      totalAmount
+      totalAmount,
+      currentPage: 'orders'
     });
   } catch (error) {
     console.error("Error loading order:", error);

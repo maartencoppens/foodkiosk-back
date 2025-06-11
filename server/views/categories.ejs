@@ -1,145 +1,67 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <aside class="col-md-3 col-lg-2 px-0 sidebar">
-      <header class="p-3">
-        <h1 class="h4 text-white">FoodKiosk</h1>
-      </header>
-      <nav aria-label="Main navigation">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/products">
-              <i class="bi bi-box me-2" aria-hidden="true"></i> Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/categories" aria-current="page">
-              <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
-            </a>
-          </li>
-       
-          <li class="nav-item">
-            <a class="nav-link" href="/orders">
-              <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="col-md-9 col-lg-10 main-content">
-      <!-- Top Navigation -->
-      <header class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-          <h2 class="navbar-brand">Categories</h2>
-          <div class="d-flex align-items-center">
-            <div class="dropdown me-3">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="notificationsDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-bell" aria-hidden="true"></i>
-                <span
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                >
-                  3
-                </span>
-              </button>
-            </div>
-            <div class="dropdown">
-              <button
-                class="btn btn-link text-dark"
-                type="button"
-                id="userDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-person-circle" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
+<!-- Categories Table -->
+<div class="card">
+  <header class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="card-title h5 mb-0"><%= title %></h3>
+      <div class="d-flex gap-2">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search categories..."
+            aria-label="Search categories"
+          />
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="bi bi-search"></i>
+          </button>
         </div>
-      </header>
-
-      <!-- Categories Table -->
-      <div class="card">
-        <header class="card-header">
-          <div class="d-flex justify-content-between align-items-center">
-            <h3 class="card-title h5 mb-0">All Categories</h3>
-            <div class="d-flex gap-2">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search categories..."
-                  aria-label="Search categories"
-                />
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-              <a href="/categories/add" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Add Category
-              </a>
-            </div>
-          </div>
-        </header>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col" class="w-15">Image</th>
-                  <th scope="col" class="w-50">Name</th>
-                  <th scope="col" class="w-15 text-end">Status</th>
-                  <th scope="col" class="text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% data.forEach(category => { %>
-                <tr>
-                  <td>
-                    <img
-                      src="/images/<%= category.image %>"
-                      alt="<%= category.name %>"
-                      class="product-image"
-                    />
-                  </td>
-                  <td><%= category.name %></td>
-                  <td class="text-end">
-                    <span
-                      class="badge <%= category.status ? 'bg-success' : 'bg-danger' %>"
-                    >
-                      <%= category.status ? 'Active' : 'Inactive' %>
-                    </span>
-                  </td>
-                  <td class="text-end">
-                    <a href="/categories/edit/<%= category.id %>" class="btn btn-sm btn-outline-primary">
-                      <i class="bi bi-pencil"></i>
-                    </a>
-                    <a href="/categories/delete/<%= category.id %>" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-outline-danger">
-                      <i class="bi bi-trash"></i>
-                    </a>
-                  </td>
-                </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-
-       
-        </div>
+        <a href="/categories/add" class="btn btn-primary">
+          <i class="bi bi-plus-circle"></i> Add Category
+        </a>
       </div>
-    </main>
+    </div>
+  </header>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" class="w-15">Image</th>
+            <th scope="col" class="w-50">Name</th>
+            <th scope="col" class="w-15 text-end">Status</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(category => { %>
+          <tr>
+            <td>
+              <img
+                src="/images/<%= category.image %>"
+                alt="<%= category.name %>"
+                class="product-image"
+              />
+            </td>
+            <td><%= category.name %></td>
+            <td class="text-end">
+              <span
+                class="badge <%= category.status ? 'bg-success' : 'bg-danger' %>"
+              >
+                <%= category.status ? 'Active' : 'Inactive' %>
+              </span>
+            </td>
+            <td class="text-end">
+              <a href="/categories/edit/<%= category.id %>" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="/categories/delete/<%= category.id %>" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

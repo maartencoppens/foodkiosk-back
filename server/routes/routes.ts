@@ -37,12 +37,14 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }, []);
 
   res.render("index", { 
-    title: "Management System",
-    recentOrders: orders 
+    title: "Recent Orders",
+    recentOrders: orders,
+    currentPage: 'dashboard'
   });
 });
 
 // Mount the route modules
+
 router.use("/products", productsRouter);
 router.use("/categories", categoriesRouter);
 router.use("/orders", ordersRouter);

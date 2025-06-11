@@ -1,0 +1,30 @@
+<!-- Sidebar -->
+<aside class="col-md-3 col-lg-2 px-0 sidebar">
+  <header class="p-3">
+    <h1 class="h4 text-white">FoodKiosk</h1>
+  </header>
+  <nav aria-label="Main navigation">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link <%= currentPage === 'dashboard' ? 'active' : '' %>" href="/" <%= currentPage === 'dashboard' ? 'aria-current="page"' : '' %>>
+          <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <%= currentPage === 'products' ? 'active' : '' %>" href="/products" <%= currentPage === 'products' ? 'aria-current="page"' : '' %>>
+          <i class="bi bi-box me-2" aria-hidden="true"></i> Products
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <%= currentPage === 'categories' ? 'active' : '' %>" href="/categories" <%= currentPage === 'categories' ? 'aria-current="page"' : '' %>>
+          <i class="bi bi-tags me-2" aria-hidden="true"></i> Categories
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <%= currentPage === 'orders' ? 'active' : '' %>" href="/orders" <%= currentPage === 'orders' ? 'aria-current="page"' : '' %>>
+          <i class="bi bi-cart me-2" aria-hidden="true"></i> Orders
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside> 
