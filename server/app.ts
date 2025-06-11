@@ -30,8 +30,14 @@ app.use(express.json());
 // CORS middleware configureren
 app.use(cors());
 
+// Ensure SESSION_SECRET is available
+if (!process.env.SESSION_SECRET) {
+  console.error('SESSION_SECRET environment variable is not set');
+  process.exit(1);
+}
+
 app.use(session({
-  secret: process.env.SESSION_SECRET!,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
