@@ -21,7 +21,7 @@ router.get("/login", (req: Request, res: Response) => {
 });
 
 // Logout route
-router.get("/logout", (req: Request, res: Response) => {
+router.post("/logout", (req: Request, res: Response) => {
   req.session = null;
   res.redirect("/login");
 });
