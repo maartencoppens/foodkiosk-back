@@ -41,7 +41,7 @@ app.use(cookieSession({
   name: 'session',
   keys: [process.env.SESSION_SECRET],
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  secure: process.env.NODE_ENV === 'production',
+  secure: false,
   httpOnly: true,
   sameSite: 'lax'
 }));
@@ -56,3 +56,4 @@ app.use("/api", apiRoutes);
 app.listen(PORT, (): void => {
   console.log(`Server draait op http://localhost:${PORT}`);
 });
+// process.env.NODE_ENV === 'production'
