@@ -46,6 +46,7 @@ export const handleLogin = async (req: Request, res: Response) => {
   return res.redirect("/login?error=pass");
 };
 console.log("ADMIN_USER:", process.env.ADMIN_USER);
+console.log("ADMIN_USER:", process.env.SESSION_SECRET);
 
 export const adminOnly = (req: Request, res: Response, next: NextFunction) => {
   if (req.session?.isAdmin) return next();
