@@ -2,7 +2,6 @@ import express, { Request, Response, Router } from "express";
 import {
   getAllOrders,
   getOrderById,
-  getRecentOrders,
 } from "../services/orders";
 
 const router: Router = express.Router();

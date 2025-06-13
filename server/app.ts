@@ -45,15 +45,25 @@ app.use(cookieSession({
   httpOnly: true,
   sameSite: 'lax'
 }));
+//secure: process.env.NODE_ENV === 'production'
 
 // Routes gebruiken
+app.use("/api", apiRoutes);  // API routes first, completely separate
+
+// Login and admin routes
 app.post("/login", handleLogin);
 app.use("/", loginRoutes);
-app.use("/", adminOnly, routes);
-app.use("/api", apiRoutes);
+
+// Admin protected routes
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    next();
+  } else {
+    adminOnly(req, res, next);
+  }
+}, routes);
 
 // Server starten
 app.listen(PORT, (): void => {
   console.log(`Server draait op http://localhost:${PORT}`);
 });
-// process.env.NODE_ENV === 'production'
